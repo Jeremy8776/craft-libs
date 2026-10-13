@@ -817,6 +817,44 @@ dependencies = [
 ]
 
 [[package]]
+name = "craft-ai-comfyui"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "craft-ai-media",
+ "craft-ai-model",
+ "craft-ai-native",
+ "craft-ai-test-server",
+ "png 0.17.16",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "ureq",
+ "url",
+]
+
+[[package]]
+name = "craft-ai-declarative"
+version = "0.1.0"
+dependencies = [
+ "craft-ai-media",
+ "craft-ai-model",
+ "craft-ai-test-server",
+ "serde_json",
+ "ureq",
+]
+
+[[package]]
+name = "craft-ai-features"
+version = "0.1.0"
+dependencies = [
+ "craft-ai-model",
+ "png 0.17.16",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "craft-ai-media"
 version = "0.1.0"
 dependencies = [

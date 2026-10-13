@@ -21,6 +21,9 @@ craft-ai-vertex = { path = "crates/ai-vertex" }
 craft-ai-artcraft = { path = "crates/ai-artcraft" }
 craft-ai-seedance = { path = "crates/ai-seedance" }
 craft-ai-sam3 = { path = "crates/ai-sam3" }
+craft-ai-features = { path = "crates/ai-features" }
+craft-ai-declarative = { path = "crates/ai-declarative" }
+craft-ai-comfyui = { path = "crates/ai-comfyui" }
 craft-atomic = { path = "crates/atomic" }
 craft-cms = { path = "crates/cms" }
 craft-print = { path = "crates/print" }
