@@ -15,6 +15,7 @@ craft-ai-media = { path = "crates/ai-media" }
 craft-ai-model = { path = "crates/ai-model" }
 craft-ai-native = { path = "crates/ai-native" }
 craft-ai-test-server = { path = "crates/ai-test-server" }
+craft-ai-openai = { path = "crates/ai-openai" }
 craft-atomic = { path = "crates/atomic" }
 craft-cms = { path = "crates/cms" }
 craft-print = { path = "crates/print" }

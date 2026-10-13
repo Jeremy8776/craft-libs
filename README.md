@@ -26,6 +26,7 @@ craft-<name> = { git = "https://github.com/storytold/craft-libs", rev = "<commit
 - [`craft-ai-model`](crates/ai-model/README.md): the data model and contract for AI in the Craft Apps (connections, models, tools, requests, jobs, consent, history, route spec). Pure, no I/O, wasm-safe. Contract in [docs/ai-shared-layer.md](docs/ai-shared-layer.md).
 - [`craft-ai-native`](crates/ai-native/README.md): the desktop half of the shared AI layer: secret stores (OS keychain, encrypted file, environment), the shared connections file, consent, request history and catalog files.
 - [`craft-ai-media`](crates/ai-media/README.md): durable local copies of media a hosted AI provider returns as a link, with strict link rules.
+- [`craft-ai-openai`](crates/ai-openai/README.md): the OpenAI-compatible provider adapter (text, tools, structured output, image generate, edit and inpaint).
 - [`craft-atomic`](crates/atomic/README.md): Crash-safe atomic file writing and replacement with same-directory staging, directory fsync, Apple `F_FULLFSYNC` fallback, transient lock backoff, and fault injection for the Craft suite.
 - [`craft-cms`](crates/cms/README.md): pure-Rust ICC v2/v4 colour management: profile parsing
   and writing, transforms, rendering intents, black point compensation, soft proofing, gamut
