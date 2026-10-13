@@ -24,6 +24,7 @@ craft-ai-sam3 = { path = "crates/ai-sam3" }
 craft-ai-features = { path = "crates/ai-features" }
 craft-ai-declarative = { path = "crates/ai-declarative" }
 craft-ai-comfyui = { path = "crates/ai-comfyui" }
+craft-ai-comfy-env = { path = "crates/ai-comfy-env" }
 craft-atomic = { path = "crates/atomic" }
 craft-cms = { path = "crates/cms" }
 craft-print = { path = "crates/print" }

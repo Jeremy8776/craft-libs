@@ -1,0 +1,29 @@
+name: AI ComfyUI environment
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['crates/ai-comfy-env/**', 'crates/ai-features/**', 'crates/ai-media/**', 'crates/ai-model/**', 'crates/ai-test-server/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-comfy-env.yml']
+  pull_request:
+    paths: ['crates/ai-comfy-env/**', 'crates/ai-features/**', 'crates/ai-media/**', 'crates/ai-model/**', 'crates/ai-test-server/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-comfy-env.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo fmt --check
+      - run: cargo clippy -p craft-ai-comfy-env --all-targets --locked -- -D warnings
+      - run: cargo test -p craft-ai-comfy-env --locked

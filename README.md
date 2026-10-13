@@ -29,6 +29,7 @@ craft-<name> = { git = "https://github.com/storytold/craft-libs", rev = "<commit
 - [`craft-ai-openai`](crates/ai-openai/README.md): the OpenAI-compatible provider adapter (text, tools, structured output, image generate, edit and inpaint).
 - [`craft-ai-bfl`](crates/ai-bfl/README.md), [`craft-ai-vertex`](crates/ai-vertex/README.md), [`craft-ai-artcraft`](crates/ai-artcraft/README.md), [`craft-ai-seedance`](crates/ai-seedance/README.md), [`craft-ai-sam3`](crates/ai-sam3/README.md): small provider adapters for the shared AI layer (Black Forest Labs, Google Vertex, ArtCraft's API, Seedance through BytePlus, a SAM 3 bridge).
 - [`craft-ai-features`](crates/ai-features/README.md), [`craft-ai-declarative`](crates/ai-declarative/README.md), [`craft-ai-comfyui`](crates/ai-comfyui/README.md): the AI tool catalogue and model recipes; the runner for a route described as data; the local ComfyUI adapter (workflows, SAM 3).
+- [`craft-ai-comfy-env`](crates/ai-comfy-env/README.md): ComfyUI environment for the AI layer: install detection, model inventory, checksummed downloads, node packs, pinned portable install.
 - [`craft-atomic`](crates/atomic/README.md): Crash-safe atomic file writing and replacement with same-directory staging, directory fsync, Apple `F_FULLFSYNC` fallback, transient lock backoff, and fault injection for the Craft suite.
 - [`craft-cms`](crates/cms/README.md): pure-Rust ICC v2/v4 colour management: profile parsing
   and writing, transforms, rendering intents, black point compensation, soft proofing, gamut
