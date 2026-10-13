@@ -1,0 +1,29 @@
+name: AI egui widgets
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['crates/ai-egui/**', 'crates/ai-client/**', 'crates/ai-features/**', 'crates/ai-model/**', 'crates/ai-native/**', 'crates/ai-test-server/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-egui.yml']
+  pull_request:
+    paths: ['crates/ai-egui/**', 'crates/ai-client/**', 'crates/ai-features/**', 'crates/ai-model/**', 'crates/ai-native/**', 'crates/ai-test-server/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-egui.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo fmt --check
+      - run: cargo clippy -p craft-ai-egui --all-targets --locked -- -D warnings
+      - run: cargo test -p craft-ai-egui --locked

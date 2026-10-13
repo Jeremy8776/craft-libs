@@ -1,0 +1,26 @@
+[package]
+name = "craft-ai-egui"
+description = "Shared egui widgets for the Craft AI layer: connection status and model picker, consent prompt, job progress with cancel."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version = "1.95"
+repository.workspace = true
+
+[dependencies]
+craft-ai-model.workspace = true
+craft-ai-client.workspace = true
+craft-ai-features.workspace = true
+egui = "0.36"
+
+[dev-dependencies]
+craft-ai-test-server.workspace = true
+egui_kittest = "0.36"
+eframe = { version = "0.36", default-features = false, features = ["default_fonts", "glow", "x11", "wayland"] }
+craft-ai-native.workspace = true
+craft-ai-features.workspace = true
+tempfile = "3"
+serde_json.workspace = true
+
+[lints]
+workspace = true
