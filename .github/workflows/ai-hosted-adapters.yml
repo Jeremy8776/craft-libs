@@ -1,0 +1,29 @@
+name: AI hosted adapters
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['crates/ai-bfl/**', 'crates/ai-vertex/**', 'crates/ai-artcraft/**', 'crates/ai-seedance/**', 'crates/ai-sam3/**', 'crates/ai-model/**', 'crates/ai-test-server/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-hosted-adapters.yml']
+  pull_request:
+    paths: ['crates/ai-bfl/**', 'crates/ai-vertex/**', 'crates/ai-artcraft/**', 'crates/ai-seedance/**', 'crates/ai-sam3/**', 'crates/ai-model/**', 'crates/ai-test-server/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-hosted-adapters.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo fmt --check
+      - run: cargo clippy -p craft-ai-bfl -p craft-ai-vertex -p craft-ai-artcraft -p craft-ai-seedance -p craft-ai-sam3 --all-targets --locked -- -D warnings
+      - run: cargo test -p craft-ai-bfl -p craft-ai-vertex -p craft-ai-artcraft -p craft-ai-seedance -p craft-ai-sam3 --locked

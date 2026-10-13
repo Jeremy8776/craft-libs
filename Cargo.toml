@@ -16,6 +16,11 @@ craft-ai-model = { path = "crates/ai-model" }
 craft-ai-native = { path = "crates/ai-native" }
 craft-ai-test-server = { path = "crates/ai-test-server" }
 craft-ai-openai = { path = "crates/ai-openai" }
+craft-ai-bfl = { path = "crates/ai-bfl" }
+craft-ai-vertex = { path = "crates/ai-vertex" }
+craft-ai-artcraft = { path = "crates/ai-artcraft" }
+craft-ai-seedance = { path = "crates/ai-seedance" }
+craft-ai-sam3 = { path = "crates/ai-sam3" }
 craft-atomic = { path = "crates/atomic" }
 craft-cms = { path = "crates/cms" }
 craft-print = { path = "crates/print" }
