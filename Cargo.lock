@@ -826,6 +826,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "craft-ai-client"
+version = "0.1.0"
+dependencies = [
+ "craft-ai-artcraft",
+ "craft-ai-bfl",
+ "craft-ai-comfyui",
+ "craft-ai-declarative",
+ "craft-ai-features",
+ "craft-ai-media",
+ "craft-ai-model",
+ "craft-ai-native",
+ "craft-ai-openai",
+ "craft-ai-sam3",
+ "craft-ai-seedance",
+ "craft-ai-test-server",
+ "craft-ai-vertex",
+ "serde_json",
+ "tempfile",
+ "url",
+]
+
+[[package]]
 name = "craft-ai-comfy-env"
 version = "0.1.0"
 dependencies = [

@@ -1,0 +1,29 @@
+name: AI client
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['crates/ai-client/**', 'crates/ai-model/**', 'crates/ai-native/**', 'crates/ai-media/**', 'crates/ai-features/**', 'crates/ai-declarative/**', 'crates/ai-comfyui/**', 'crates/ai-openai/**', 'crates/ai-bfl/**', 'crates/ai-vertex/**', 'crates/ai-artcraft/**', 'crates/ai-seedance/**', 'crates/ai-sam3/**', 'crates/ai-test-server/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-client.yml']
+  pull_request:
+    paths: ['crates/ai-client/**', 'crates/ai-model/**', 'crates/ai-native/**', 'crates/ai-media/**', 'crates/ai-features/**', 'crates/ai-declarative/**', 'crates/ai-comfyui/**', 'crates/ai-openai/**', 'crates/ai-bfl/**', 'crates/ai-vertex/**', 'crates/ai-artcraft/**', 'crates/ai-seedance/**', 'crates/ai-sam3/**', 'crates/ai-test-server/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-client.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo fmt --check
+      - run: cargo clippy -p craft-ai-client --all-targets --locked -- -D warnings
+      - run: cargo test -p craft-ai-client --locked

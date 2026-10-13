@@ -1,0 +1,31 @@
+[package]
+name = "craft-ai-client"
+description = "App-facing entry point of the Craft AI layer: resolve a role, check consent, fetch the key, start a job. Native only."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+
+[dependencies]
+craft-ai-model.workspace = true
+craft-ai-native.workspace = true
+craft-ai-openai.workspace = true
+craft-ai-artcraft.workspace = true
+craft-ai-bfl.workspace = true
+craft-ai-features.workspace = true
+craft-ai-media.workspace = true
+craft-ai-comfyui.workspace = true
+craft-ai-seedance.workspace = true
+craft-ai-vertex.workspace = true
+craft-ai-sam3.workspace = true
+craft-ai-declarative.workspace = true
+
+[dev-dependencies]
+craft-ai-test-server.workspace = true
+serde_json.workspace = true
+tempfile = "3"
+url = "2"
+
+[lints]
+workspace = true
