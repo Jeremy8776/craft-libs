@@ -1,0 +1,15 @@
+[package]
+name = "craft-ai-test-server"
+description = "Scripted localhost HTTP server for the Craft AI crates' tests (test support, not shipped)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+serde_json.workspace = true
+
+[lints]
+workspace = true

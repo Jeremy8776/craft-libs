@@ -1,0 +1,29 @@
+name: AI native and media
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['crates/ai-native/**', 'crates/ai-media/**', 'crates/ai-test-server/**', 'crates/atomic/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-native.yml']
+  pull_request:
+    paths: ['crates/ai-native/**', 'crates/ai-media/**', 'crates/ai-test-server/**', 'crates/atomic/**', 'Cargo.toml', 'Cargo.lock', '.github/workflows/ai-native.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  ai-native:
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo fmt --check
+      - run: cargo clippy -p craft-ai-native -p craft-ai-media -p craft-ai-test-server --all-targets --locked -- -D warnings
+      - run: cargo test -p craft-ai-native -p craft-ai-media -p craft-ai-test-server --locked
