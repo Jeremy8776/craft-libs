@@ -1,9 +1,10 @@
 # Installing the Craft apps on Windows
 
-Where the Craft apps install, which registrations they write, and what an update may and may
-not change. The pilot implementation is PhotoCraft and the ArtCraft Launcher; other apps adopt
-this policy one at a time, and nothing here moves an existing installation. Storage of
-settings, caches and models is a separate policy: [settings-storage.md](settings-storage.md).
+This is a proposed policy, not a claim about a published release. Preparation covers every
+current Craft app with a Windows MSI, plus the launcher's new-install folder. The
+[adoption inventory](windows-installation-adoption.md) records the scope and remaining gates.
+Nothing here moves an existing installation. Storage of settings, caches and models is a
+separate policy: [settings-storage.md](settings-storage.md).
 
 ## Installation contexts
 
@@ -13,7 +14,12 @@ One dual-scope MSI per app (Microsoft's "Single Package Authoring": `ALLUSERS=2`
 | Context | Default destination | How it is chosen |
 |---|---|---|
 | Per-user (the default) | `%LOCALAPPDATA%\Programs\ArtCraft\<App>` | Just install: no UAC prompt |
-| Per-machine (an explicit choice) | `%ProgramFiles%\ArtCraft\<App>` (per package architecture) | The setup wizard's "Install for all users" box, or `msiexec ... ALLUSERS=1` |
+| Per-machine (an explicit choice) | `%ProgramFiles%\ArtCraft\<App>` (per package architecture) | The setup wizard's "Everyone" choice, or `msiexec ... ALLUSERS=1` |
+
+The launcher itself remains per-user only, with new copies under
+`%LOCALAPPDATA%\Programs\ArtCraft\Launcher`. Existing launcher folders and its current
+self-update mechanism are preserved. A machine-wide launcher/updater service is a separate
+proposal, not part of this folder change.
 
 In a per-user install Windows Installer itself redirects the `ProgramFiles` folder to the
 user's own Programs folder and the `HKMU` registry root to `HKCU`, so one package serves both
@@ -22,8 +28,12 @@ contexts. Everything a package writes follows its context automatically:
 - `InstallDir` record: `HKLM\Software\<App>` per-machine, `HKCU\Software\<App>` per-user.
 - File associations and "Open with" registrations: `HKLM\Software\Classes` per-machine,
   `HKCU\Software\Classes` per-user.
-- Components are keyed on registry values, never on files, so they are valid in both
-  contexts (ICE38).
+- Registry writes use context-sensitive roots. Existing component key paths and app-owned
+  associations are retained where valid. Each package must pass the compiled install-policy
+  checks; unresolved ICE57 shortcut diagnostics are tracked separately from the path policy.
+
+Scope is chosen before launch conditions and directory costing. The scope page must not be
+added as a late checkbox after the default directory has already been resolved.
 
 The ArtCraft Launcher and a direct install of the same MSI produce the same result: the
 launcher dispatches the same package and only adds `INSTALLFOLDER` (the user's chosen folder)
@@ -35,10 +45,14 @@ and the context properties of the copy being updated.
   being replaced, wherever the user put it. A later change to the suite default moves nothing.
 - **The context.** A per-machine copy updates per-machine (`ALLUSERS=1`), a per-user copy
   per-user. MSI major upgrades cannot cross installation contexts, so a context change is a
-  deliberate uninstall-and-reinstall, never an ordinary upgrade.
+  deliberate uninstall-and-reinstall, never an ordinary upgrade. The launcher queries
+  authoritative MSI registration, not the hive containing a display entry. An unknown or
+  conflicting context stops the update rather than selecting the new-install default.
 - **No duplicates.** Installing in the other context while a copy already exists is a visible
   stop with a message naming the fix, never a silent second copy. The wizard pre-ticks the
   matching scope when a copy in the other context is registered.
+- **The chosen folder survives elevation.** `INSTALLFOLDER` is a secure MSI property, so
+  the elevated installer receives the same exact destination selected in the setup wizard.
 - **Custom folders stay first-class.** A chosen exact app folder is used as-is; a chosen
   suite root gets the app subfolder appended once (`D:\Craft` becomes `D:\Craft\PhotoCraft`,
   never `D:\Craft\PhotoCraft\PhotoCraft`). A missing drive or an unavailable folder is a
@@ -63,4 +77,6 @@ per [settings-storage.md](settings-storage.md).
 Downloaded model files are persistent user assets. An app's cache cleanup and an app's
 uninstaller must never delete them, another app's data, or user documents; existing model
 folders are discovered read-only. See [settings-storage.md](settings-storage.md) for where
-models live and what is disposable.
+models live and what is disposable. Model resources shipped inside an application package,
+such as bundled OCR resources, remain part of that package; this does not give an installer
+ownership of separately downloaded shared models or discovered model folders.
