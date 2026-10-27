@@ -6,21 +6,21 @@ launcher, not merely the repositories on one developer's machine.
 
 | Repository | Prepared Windows scope | Verification boundary |
 |---|---|---|
-| `effectcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `pdfcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `lightcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `photocraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `figcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `vectorcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `wordcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `gridcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `deckcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `filmcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
+| `effectcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `pdfcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `lightcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `photocraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `figcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `vectorcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `wordcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `gridcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `deckcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `filmcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
 | `craft-launcher` | Per-user launcher; context-safe app updates | x64, x86 and arm64 metadata checks pass; real installation gates pending |
 | `artcraft` | Not applicable | No Windows MSI definition on the inventoried default branch |
-| `soundcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `cadcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
-| `designcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real installation gates pending |
+| `soundcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `cadcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
+| `designcraft` | Per-user default; explicit all-users option | x64, x86 and arm64 metadata checks pass; real msiexec runs pass in both scopes (fresh install, upgrade, uninstall; wizard and silent); clean-machine and second-account gates pending |
 | `artcraftx` | Not applicable | No Windows MSI definition on the inventoried default branch |
 | `AniCraft` | Not applicable | No Windows MSI definition on the inventoried default branch |
 

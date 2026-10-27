@@ -14,7 +14,7 @@ One dual-scope MSI per app (Microsoft's "Single Package Authoring": `ALLUSERS=2`
 | Context | Default destination | How it is chosen |
 |---|---|---|
 | Per-user (the default) | `%LOCALAPPDATA%\Programs\ArtCraft\<App>` | Just install: no UAC prompt |
-| Per-machine (an explicit choice) | `%ProgramFiles%\ArtCraft\<App>` (per package architecture) | The setup wizard's "Everyone" choice, or `msiexec ... ALLUSERS=1` |
+| Per-machine (an explicit choice) | `%ProgramFiles%\ArtCraft\<App>` (`Program Files (x86)` for a 32-bit package) | The setup wizard's "Everyone" choice, or `msiexec ... ALLUSERS=1` |
 
 The launcher itself remains per-user only, with new copies under
 `%LOCALAPPDATA%\Programs\ArtCraft\Launcher`. Existing launcher folders and its current
@@ -34,6 +34,12 @@ contexts. Everything a package writes follows its context automatically:
 
 Scope is chosen before launch conditions and directory costing. The scope page must not be
 added as a late checkbox after the default directory has already been resolved.
+The page also has to leave `ALLUSERS` unset for "Only for me". Setting `ALLUSERS=2` there makes
+Windows Installer search for related products as if the run were per-machine, so an interactive
+upgrade skips the existing per-user copy and installs a second registration beside it.
+Windows Installer also resolves Program Files once, for the context it started in, so the wizard
+sets the new-install folder itself after the choice. Without that, "Everyone" installed into the
+user profile with a machine-wide registration.
 
 The ArtCraft Launcher and a direct install of the same MSI produce the same result: the
 launcher dispatches the same package and only adds `INSTALLFOLDER` (the user's chosen folder)
