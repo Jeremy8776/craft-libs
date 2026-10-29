@@ -3,7 +3,7 @@
 This is a proposed policy, not a claim about a published release. Preparation covers every
 current Craft app with a Windows MSI, plus the launcher's new-install folder. The
 [adoption inventory](windows-installation-adoption.md) records the scope and remaining gates.
-Nothing here moves an existing installation. Storage of settings, caches and models is a
+Only a copy in the old default folder moves (see below); chosen folders never do. Storage of settings, caches and models is a
 separate policy: [settings-storage.md](settings-storage.md).
 
 ## Installation contexts
@@ -13,13 +13,16 @@ One dual-scope MSI per app (Microsoft's "Single Package Authoring": `ALLUSERS=2`
 
 | Context | Default destination | How it is chosen |
 |---|---|---|
-| Per-user (the default) | `%LOCALAPPDATA%\Programs\ArtCraft\<App>` | Just install: no UAC prompt |
-| Per-machine (an explicit choice) | `%ProgramFiles%\ArtCraft\<App>` (`Program Files (x86)` for a 32-bit package) | The setup wizard's "Everyone" choice, or `msiexec ... ALLUSERS=1` |
+| Per-machine (the default for new installs) | `%ProgramFiles%\ArtCraft\<App>` (`Program Files (x86)` for a 32-bit package) | The launcher installs with `ALLUSERS=1`; the setup wizard's "Everyone" choice |
+| Per-user (kept for existing copies) | `%LOCALAPPDATA%\Programs\ArtCraft\<App>` | Copies installed per-user keep their context on update; the wizard's "Only for me" choice |
+
+Amended 29/10/2026: new installs default to per-machine, so every app sits in one
+`Program Files\ArtCraft` folder. **Update all** asks Windows for permission once per run,
+through a single elevated helper that closes when the run ends, not a resident service.
 
 The launcher itself remains per-user only, with new copies under
 `%LOCALAPPDATA%\Programs\ArtCraft\Launcher`. Existing launcher folders and its current
-self-update mechanism are preserved. A machine-wide launcher/updater service is a separate
-proposal, not part of this folder change.
+self-update mechanism are preserved.
 
 In a per-user install Windows Installer itself redirects the `ProgramFiles` folder to the
 user's own Programs folder and the `HKMU` registry root to `HKCU`, so one package serves both
@@ -48,7 +51,12 @@ and the context properties of the copy being updated.
 ## What an update must preserve
 
 - **The exact folder.** An ordinary update installs into the remembered folder of the copy
-  being replaced, wherever the user put it. A later change to the suite default moves nothing.
+  being replaced, wherever the user put it. A folder someone chose is never moved.
+- **One exception: the old default.** A copy whose remembered folder is exactly the
+  pre-suite default `%ProgramFiles%\<App>\` moves to `%ProgramFiles%\ArtCraft\<App>` on its
+  next update. A folder that cannot be read counts as chosen and stays. Someone who typed
+  `C:\Program Files\<App>` by hand looks the same as the old default and will be moved;
+  Windows Installer kept no record of whether that folder was chosen.
 - **The context.** A per-machine copy updates per-machine (`ALLUSERS=1`), a per-user copy
   per-user. MSI major upgrades cannot cross installation contexts, so a context change is a
   deliberate uninstall-and-reinstall, never an ordinary upgrade. The launcher queries
