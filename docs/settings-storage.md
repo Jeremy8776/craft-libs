@@ -13,7 +13,7 @@ Discussion: [storytold/craft-libs#12](https://github.com/storytold/craft-libs/is
 | Settings people might edit | `config.toml` in the config folder | One readable file with comments, atomic saves, backup, recovery, migrations |
 | Window and UI state | `ui.ron` / `app.ron` beside `config.toml` | Changes every session; not worth comments or hand edits |
 | Caches | Platform cache folder (`paths::cache_dir`); `%LOCALAPPDATA%` on Windows so it does not roam | Disposable, large |
-| Downloaded models | The user's chosen persistent model root (suggested `%LOCALAPPDATA%\ArtCraft\models` on Windows; `XDG_DATA_HOME` on Linux) | Persistent user assets: never deleted by cache cleanup or an app's uninstaller, never disposable ([installation-policy.md](installation-policy.md)) |
+| Downloaded models | The user's chosen persistent model root (suggested `%LOCALAPPDATA%\ArtCraft\models` on Windows; `$XDG_DATA_HOME/ArtCraft/models` on Linux, or `~/.local/share/ArtCraft/models` when it is unset) | Persistent user assets: never deleted by cache cleanup or an app's uninstaller, never disposable ([installation-policy.md](installation-policy.md)) |
 | Recovery and autosave files | Platform data folder (`paths::data_dir`) | Not settings; must survive a settings reset |
 | Settings that belong to a library or project (LightCraft) | Inside that folder, via `SettingsStore::open_at` | Travels with the library |
 | API keys and tokens | The OS keychain | Never in a plain-text file |

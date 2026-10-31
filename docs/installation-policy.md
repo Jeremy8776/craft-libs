@@ -8,17 +8,30 @@ separate policy: [settings-storage.md](settings-storage.md).
 
 ## Installation contexts
 
-One dual-scope MSI per app (Microsoft's "Single Package Authoring": `ALLUSERS=2` with
-`MSIINSTALLPERUSER=1` in the Property table, written by WiX's `Package/Scope="perUserOrMachine"`):
+**The policy (amended 29/10/2026): new installs are per-machine**, so every app sits in one
+`Program Files\ArtCraft` folder. Per-user copies that already exist keep their context.
 
-| Context | Default destination | How it is chosen |
+**What the released packages do today differs, and this is a known gap.** Each app ships one
+dual-scope MSI (Microsoft's "Single Package Authoring": `ALLUSERS=2` with `MSIINSTALLPERUSER=1`
+in the Property table, written by WiX's `Package/Scope="perUserOrMachine"`). That authored
+default is **per-user**: run with no scope property, the package installs for one account. So
+today only the launcher, which passes `ALLUSERS=1` for a new install, follows the policy by
+itself. A person running the MSI directly gets per-machine only by choosing "Everyone" in its
+wizard. Closing the gap is follow-up work: one small PR per app making its package per-machine
+only (`Scope="perMachine"`, no scope page), which also removes the per-user default here and
+in the [adoption inventory](windows-installation-adoption.md).
+
+| Context | Default destination | Who chooses it today |
 |---|---|---|
-| Per-machine (the default for new installs) | `%ProgramFiles%\ArtCraft\<App>` (`Program Files (x86)` for a 32-bit package) | The launcher installs with `ALLUSERS=1`; the setup wizard's "Everyone" choice |
-| Per-user (kept for existing copies) | `%LOCALAPPDATA%\Programs\ArtCraft\<App>` | Copies installed per-user keep their context on update; the wizard's "Only for me" choice |
+| Per-machine (the policy for new installs) | `%ProgramFiles%\ArtCraft\<App>` (`Program Files (x86)` for a 32-bit package) | The launcher, with `ALLUSERS=1`; the setup wizard's "Everyone" choice |
+| Per-user (the package's authored default; kept for existing copies) | `%LOCALAPPDATA%\Programs\ArtCraft\<App>` | An MSI run with no scope property; the wizard's "Only for me" choice; copies installed per-user keep their context on update |
 
-Amended 29/10/2026: new installs default to per-machine, so every app sits in one
-`Program Files\ArtCraft` folder. **Update all** asks Windows for permission once per run,
-through a single elevated helper that closes when the run ends, not a resident service.
+**Permission prompts.** Each all-users install or update asks Windows for permission. One
+prompt per **Update all** run was built (craft-launcher#974) with a hidden PowerShell, which
+antivirus flagged; it was reverted (craft-launcher#1077). The launcher's signed installer
+helper (craft-launcher#1080, in review) does all-users downgrades under one prompt, with no script.
+Update all keeps one prompt per all-users package until it uses that helper too. No resident
+service is planned.
 
 The launcher itself remains per-user only, with new copies under
 `%LOCALAPPDATA%\Programs\ArtCraft\Launcher`. Existing launcher folders and its current
